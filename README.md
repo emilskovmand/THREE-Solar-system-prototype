@@ -23,8 +23,8 @@ var Material = new THREE.MeshPhongMaterial({
     alphaMap: new THREE.TextureLoader().load("YOUR/PATH"),
     shininess: 5       
 })
-var mesh = new THREE.Mesh(SunGeometry, SunMaterial);
-mesh.name = "Planet name";
+var mesh = new THREE.Mesh(Geometry, Material);
+mesh.name = "Planet's name";
 sun.position.set(0, 0, 0);
 
 scene.add( mesh );
