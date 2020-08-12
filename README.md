@@ -44,9 +44,11 @@ saturnRingsGeometry.uvsNeedUpdate = true;
 *This is before*
 
 ***Before***
+
 ![Broken Texture](https://imgur.com/KS2k4u9.png)
 
 ***After***
+
 ![Fixed Texture](https://imgur.com/TR18JsJ.png)
 
 ## Usage (Anvendelse)
