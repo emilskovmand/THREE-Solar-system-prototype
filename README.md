@@ -4,7 +4,7 @@ This prototype is a Three.js project showing off my first 5 day journey of using
 
 * No post-processing
 * No dependencies
-* Pictures are High resolution and slow to load
+* Pictures are high resolution and slow to load
 
 ## Purpose (Formål)
 
