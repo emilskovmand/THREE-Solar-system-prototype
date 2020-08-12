@@ -42,8 +42,8 @@ for (let i = 0; i < ringPos.count; i++) {
 saturnRingsGeometry.uvsNeedUpdate = true;
 ```
 *This is before and after:*
-![Broken Texture](http://url/to/img.png)
-![Fixed Texture](https://imgur.com/TR18JsJ)
+![Broken Texture](https://imgur.com/KS2k4u9.png)
+![Fixed Texture](https://imgur.com/TR18JsJ.png)
 
 ## Usage (Anvendelse)
 As notes for future implementations of the Three.js library...
