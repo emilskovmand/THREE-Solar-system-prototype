@@ -30,7 +30,7 @@ mesh.position.set(0, 0, 0);
 scene.add( mesh );
 spheres.push(mesh);
 ```
-But quickly realised this is a messy and long routine, so i created a class that could take parameters for its own Planet, the class is long but take a look from **line 97-263**.
+But quickly realised this is a messy and long routine, so I created a class that could take parameters for its own Planet, the class is long but take a look from **line 97-263**.
 
 This course of action made it easier to work with and later implement moons and Saturn's rings... which took a bit of reading about 3D modeling and [UV-mapping](https://en.wikipedia.org/wiki/UV_mapping), but here's the code to fix the texture for saturn's rings (To be improved)
 
