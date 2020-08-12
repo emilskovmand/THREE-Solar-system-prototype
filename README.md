@@ -13,7 +13,7 @@ This is just me learning the fundamentals of [Three.js](https://threejs.org/).
 (Danish) Det her er bare mig som vil lære det fundamentale af [Three.js](https://threejs.org/).
 
 ## Thoughts throughout the project
-I chose this idea for a project because I like learning about space and our solar system, and wanted to use math to create a simulation of our planets orbiting the sun... and I succeeded and plan on making this into a small game where you can read our planet and our neighbouring planets.
+I chose this idea for a project because I like learning about space and our solar system, and wanted to use math to create a simulation of our planets orbiting the sun... I succeeded and plan on making this into a small game where you can read about our planets.
 
 I started off by implementing the planets and creating them each like:
 ```javascript 
