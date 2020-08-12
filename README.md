@@ -41,8 +41,12 @@ for (let i = 0; i < ringPos.count; i++) {
 }
 saturnRingsGeometry.uvsNeedUpdate = true;
 ```
-*This is before and after:*
+*This is before*
+
+***Before***
 ![Broken Texture](https://imgur.com/KS2k4u9.png)
+
+***After***
 ![Fixed Texture](https://imgur.com/TR18JsJ.png)
 
 ## Usage (Anvendelse)
