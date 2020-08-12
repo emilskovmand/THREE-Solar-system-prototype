@@ -56,9 +56,9 @@ saturnRingsGeometry.uvsNeedUpdate = true;
 #### Orbiting *The Sun*
 
 After a few hours of memorizing my Math notes about 3D Vectors and circles I came to a conclusion that the planets doesn't need a perfect circle as their orbital path. 
-Instead I created a function that created a 2D vectored polygon that returned the corners as coordinates for our planets orbital path. 
+Instead I created a function that created a 2D vectored polygon, which returned the corners as coordinates for our planets orbital path. 
 
-*h = Sun's coordinate on the x-axis, k = Sun's coordinate on the z-axis*
+*h = Sun's coordinate on the x-axis, k = Sun's coordinate on the z-axis, points = Amount of corners (More = Less performance & more precise pathing)*
 
 ```javascript
 function CircularPointsFormula (radius, h, k, points) {
