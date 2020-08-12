@@ -13,6 +13,8 @@ This is just me learning the fundamentals of [Three.js](https://threejs.org/).
 (Danish) Det her er bare mig som vil lære det fundamentale af [Three.js](https://threejs.org/).
 
 ## Thoughts throughout the project
+I chose this idea for a project because I like learning about space and our solar system, and wanted to use math to create a simulation of our planets orbiting the sun... and I succeeded and plan on making this into a small game where you can read our planet and our neighbouring planets.
+
 I started off by implementing the planets and creating them each like:
 ```javascript 
 var Geometry = new THREE.SphereGeometry(300, 32, 32);
@@ -50,6 +52,35 @@ saturnRingsGeometry.uvsNeedUpdate = true;
 ***After UV-Mapping***
 
 ![Fixed Texture](https://imgur.com/TR18JsJ.png)
+
+#### Orbiting *The Sun*
+
+After a few hours of memorizing my Math notes about 3D Vectors and circles I came to a conclusion that the planets doesn't need a perfect circle as their orbital path. 
+Instead I created a function that created a 2D vectored polygon that returned the corners as coordinates for our planets orbital path. 
+
+*h = Sun's coordinate on the x-axis, k = Sun's coordinate on the z-axis*
+
+```javascript
+function CircularPointsFormula (radius, h, k, points) {
+    let Coordinates = [];
+    const piRatio = Math.PI / 180;
+
+    for (let i = 0; i < points; i++) {
+        var 
+            A = ((360 / points) * i);
+            B = 90 - A;
+            c = radius;
+        var x = c * (Math.sin(A * piRatio)) + h,
+            y = c * (Math.cos(A * piRatio)) + k;
+        Coordinates.push({
+            x: x,
+            y: y,
+            angle: Math.atan2(y - k, x - h) * (180/ Math.PI) % 360
+        });
+    }
+    return Coordinates;
+}
+```
 
 ## Usage (Anvendelse)
 As notes for future implementations of the Three.js library...
