@@ -25,7 +25,7 @@ var Material = new THREE.MeshPhongMaterial({
 })
 var mesh = new THREE.Mesh(Geometry, Material);
 mesh.name = "Planet's name";
-sun.position.set(0, 0, 0);
+mesh.position.set(0, 0, 0);
 
 scene.add( mesh );
 spheres.push(mesh);
