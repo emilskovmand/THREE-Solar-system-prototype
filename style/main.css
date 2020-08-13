@@ -25,7 +25,6 @@ overlay {
   position: absolute;
   height: 100vh;
   width: 100vw;
-  pointer-events: none;
   z-index: 100;
   color: whitesmoke;
 }
@@ -33,5 +32,190 @@ overlay {
 overlay > #fps {
   font-family: 'Roboto', sans-serif;
   font-size: .7rem;
+  pointer-events: none;
+}
+
+overlay > #menuButton {
+  position: absolute;
+  margin-top: 1.6rem;
+  margin-left: .4rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: red 1.5px solid;
+}
+
+overlay > #menuButton:hover {
+  cursor: pointer;
+}
+
+overlay > #menuButton.active {
+  background: radial-gradient(whitesmoke 23%, transparent 10%);
+}
+
+overlay > #PlanetMenu {
+  margin-top: 10vh;
+  height: 75vh;
+  width: 25vw;
+  -webkit-transform: translateX(-25vw);
+          transform: translateX(-25vw);
+  overflow-y: auto;
+  -webkit-transition: -webkit-transform .25s ease;
+  transition: -webkit-transform .25s ease;
+  transition: transform .25s ease;
+  transition: transform .25s ease, -webkit-transform .25s ease;
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+
+overlay > #PlanetMenu::-webkit-scrollbar {
+  width: 10px;
+}
+
+overlay > #PlanetMenu::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+overlay > #PlanetMenu::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+overlay > #PlanetMenu::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+overlay > #PlanetMenu.active {
+  -webkit-transform: translateX(0vw);
+          transform: translateX(0vw);
+}
+
+overlay > #PlanetMenu > .container {
+  height: auto;
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+overlay > #PlanetMenu > .container > .planetContainer {
+  position: relative;
+  width: 19vw;
+  margin-left: 2rem;
+  height: 1.7rem;
+  margin-bottom: 1.20rem;
+  -webkit-transition: height .5s ease-out;
+  transition: height .5s ease-out;
+}
+
+overlay > #PlanetMenu > .container > .planetContainer.active {
+  height: 20vh;
+}
+
+overlay > #PlanetMenu > .container > .planetContainer.active > .information {
+  height: auto;
+  width: 100%;
+  display: block;
+  -webkit-animation: rotateDropdown 520ms ease-in-out forwards;
+          animation: rotateDropdown 520ms ease-in-out forwards;
+  -webkit-animation: scaleDropdown 520ms ease-in-out forwards;
+          animation: scaleDropdown 520ms ease-in-out forwards;
+}
+
+@-webkit-keyframes rotateDropdown {
+  0% {
+    -webkit-transform: rotateX(-90deg);
+            transform: rotateX(-90deg);
+  }
+  70% {
+    -webkit-transform: rotateX(20deg);
+            transform: rotateX(20deg);
+  }
+  100% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+  }
+}
+
+@keyframes rotateDropdown {
+  0% {
+    -webkit-transform: rotateX(-90deg);
+            transform: rotateX(-90deg);
+  }
+  70% {
+    -webkit-transform: rotateX(20deg);
+            transform: rotateX(20deg);
+  }
+  100% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+  }
+}
+
+@-webkit-keyframes scaleDropdown {
+  0% {
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
+  }
+  80% {
+    -webkit-transform: scaleY(1.025);
+            transform: scaleY(1.025);
+  }
+  100% {
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+  }
+}
+
+@keyframes scaleDropdown {
+  0% {
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
+  }
+  80% {
+    -webkit-transform: scaleY(1.025);
+            transform: scaleY(1.025);
+  }
+  100% {
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+  }
+}
+
+overlay > #PlanetMenu > .container > .planetContainer > .information {
+  width: 100%;
+  height: 3vh;
+  display: none;
+  -webkit-transform-origin: top center;
+          transform-origin: top center;
+  height: auto;
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
+  -webkit-transform: rotateX(-90deg);
+          transform: rotateX(-90deg);
+}
+
+overlay > #PlanetMenu > .container > .planetContainer > .information > .coordinate {
+  width: 100%;
+  font-size: 16px;
+  height: 20px;
+  padding: 2.3px 2.3px;
+  margin-top: .3rem;
+  margin-bottom: .1rem;
+}
+
+overlay > #PlanetMenu > .container > .planetContainer > .planetName {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  padding: 3px 7px 3px 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1.3rem;
 }
 /*# sourceMappingURL=main.css.map */

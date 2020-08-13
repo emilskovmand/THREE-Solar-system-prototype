@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Three js Prototype </title>
-    <link rel="stylesheet" href="/style/main.css">
+    <link rel="stylesheet" href="style/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -12,6 +12,17 @@
         <div id="fps">
             <span>FPS: <span id="fpsCounter"></span> </span>
         </div>
+
+        <div id="menuButton">
+
+        </div>
+
+        <div id="PlanetMenu">
+            <div class="container">
+
+            </div>
+        </div>
+
     </overlay>
 
 
@@ -100,9 +111,11 @@
                 this.object = null;
                 this.deployed = false;
                 this.name = (parameters.name) ? parameters.name : "Not named";
-                this.passiveRotate = (parameters.rotate) ? parameters.rotate : false;
+                this.passiveRotate = (parameters.passiveRotate) ? parameters.passiveRotate : false;
                 this.rotation = (parameters.rotation) ? parameters.rotation : new THREE.Vector3(0, -0.002, 0); // x, y, z
                 this.orbiting = (parameters.orbiting) ? parameters.orbiting : false;
+
+                this.tilt = (parameters.tilt) ? parameters.tilt : new THREE.Vector3(0, 0 ,0); 
 
                 this.velocity = (parameters.velocity) ? parameters.velocity : 0.1;
 
@@ -124,17 +137,19 @@
 
                 this.distanceToSun = (parameters.distanceToSun) ? parameters.distanceToSun : 0;
 
-                this.x = this.startPosition.x;
-                this.y = this.startPosition.y;
-                this.z = this.startPosition.z;
-
                 this.group = new THREE.Group();
+
+                this.informationPanel = (parameters.informationPanel) ? parameters.informationPanel : null;
 
                 this.orbitPoint = (parameters.orbitPoint) ? parameters.orbitPoint : new THREE.Vector3(0, 0, 0);
                 this.orbitCoordinates = CircularPointsFormula(this.distanceToSun, this.orbitPoint.x, this.orbitPoint.y, 360);
                 this.orbitTargets = { lastTarget: {x: 0, y: 0}, CurrentTarget: {x: 0, y: 0}, iterator: randomIntFromInterval(1, this.orbitCoordinates.length - 2) }
 
                 this.groupTargets = [];
+
+                this.x = this.group.position.x;
+                this.y = this.group.position.y;
+                this.z = this.group.position.z;
 
                 this.geometry = () => {
                     const
@@ -220,8 +235,41 @@
                 }
             }
 
+            panel() {
+                if(this.informationPanel) {
+                    if(!document.getElementById(this.name)) {
+                        this.informationPanel.insertAdjacentHTML('beforeend',
+                            `
+                            <div id="${this.name}" class="planetContainer">
+                                <span class="planetName">${this.name}</span>
+                                    <div class="information">
+                                        <div class="X coordinate"></div>
+                                        <div class="Z coordinate"></div>
+                                </div>
+                            </div>
+                            `
+                        )
+                    }
+
+                                        
+                    const infoSubjects = [{ str:"X", in: this.x}, { str:"Z", in: this.z}];
+
+                    infoSubjects.forEach(_ => {
+                        this.informationPanel.querySelector(`#${this.name} .${_.str}`).innerText = `${_.str}: ${_.in.toFixed(2)}`;
+
+                    })
+
+                }
+            }
+
             update() {
                 if (this.deployed) {
+
+                    this.panel();
+
+                    this.x = this.group.position.x
+                    this.y = this.group.position.y
+                    this.z = this.group.position.z
 
                     if (this.passiveRotate) {
                         this.object.rotation.y = this.rotation.y;
@@ -256,9 +304,10 @@
                 this.group.position.set(this.orbitCoordinates[this.orbitTargets.iterator - 1].x, 0, this.orbitCoordinates[this.orbitTargets.iterator - 1].y);
                 this.orbitTargets.lastTarget = { x: this.orbitCoordinates[this.orbitTargets.iterator - 1].x, y:this.orbitCoordinates[this.orbitTargets.iterator - 1].y }
                 this.orbitTargets.CurrentTarget = { x: this.orbitCoordinates[this.orbitTargets.iterator].x, y:this.orbitCoordinates[this.orbitTargets.iterator].y}
-                this.object.rotateX(this.rotate.x);
-                this.object.rotateY(this.rotate.y);
-                this.object.rotateZ(this.rotate.z);
+                this.object.rotateX(this.tilt.x * 180/Math.PI);
+                this.object.rotateY(this.tilt.y * 180/Math.PI);
+                this.object.rotateZ(this.tilt.x * 180/Math.PI);
+
                 scene.add( this.group );
                 this.deployed = true;
                 spheres.push(this.object);
@@ -284,6 +333,10 @@
 
         // Mercury
 
+        const velocityFactor = 3
+
+        const panel = document.querySelector("#PlanetMenu .container");
+
         var Mercury = new Planet({
             map: "assets/mercury/2k_mercury.jpg",
             normalMap: "assets/mercury/mercury_normal_map.jpg",
@@ -292,7 +345,10 @@
             distanceToSun: 390,
             name: "Mercury",
             orbiting: true,
-            velocity: 170
+            velocity: 47.4 * velocityFactor,
+            passiveRotate: true,
+            rotation: new THREE.Vector3(0, 0.00586462, 0),
+            informationPanel: panel
         })
 
         var Venus = new Planet({
@@ -302,7 +358,11 @@
             name: "Venus",
             distanceToSun: Mercury.radius + Mercury.distanceToSun + 50,
             orbiting: true,
-            velocity: 210
+            velocity: 35.0 * velocityFactor,
+            tilt: new THREE.Vector3(0, 177.4, 0),
+            passiveRotate: true,
+            rotation: new THREE.Vector3(0, 0.2430187, 0),
+            informationPanel: panel
         })
 
         var Earth = new Planet({
@@ -313,7 +373,11 @@
             rotate: {x: .2, y: 0, z: 0},
             distanceToSun: Venus.radius + Venus.distanceToSun + 50,
             orbiting: true,
-            velocity: 130
+            velocity: 29.8 * velocityFactor,
+            tilt: new THREE.Vector3(0, 23.45, 0),
+            passiveRotate: true,
+            rotation: new THREE.Vector3(0, 0.00099726968, 0),
+            informationPanel: panel
         })
 
 
@@ -341,7 +405,11 @@
             name: "Mars",
             distanceToSun: Earth.radius + Earth.distanceToSun + 50,
             orbiting: true,
-            velocity: 120
+            velocity: 24.1 * velocityFactor,
+            tilt: new THREE.Vector3(0, 23.98, 0),
+            passiveRotate: true,
+            rotation: new THREE.Vector3(0, 0.00102595675, 0),
+            informationPanel: panel
         })
 
         var Jupiter = new Planet({
@@ -350,7 +418,11 @@
             radius: 90,
             distanceToSun: Mars.radius + Mars.distanceToSun + 160,
             orbiting: true,
-            velocity: 60
+            velocity: 13.1 * velocityFactor,
+            tilt: new THREE.Vector3(0, 3.08, 0),
+            passiveRotate: true,
+            rotation: new THREE.Vector3(0, 0.0004135344, 0),
+            informationPanel: panel
         })
 
         var Saturn = new Planet({
@@ -359,7 +431,11 @@
             radius: 70,
             distanceToSun: Jupiter.radius + Jupiter.distanceToSun + 150,
             orbiting: true,
-            velocity: 50
+            velocity: 9.7 * velocityFactor,
+            tilt: new THREE.Vector3(0, 26.73, 0),
+            passiveRotate: true,
+            rotation: new THREE.Vector3(0, 0.00044403, 0),
+            informationPanel: panel
         })
 
         // Saturn Rings
@@ -379,8 +455,7 @@
             saturnRingsGeometry.attributes.uv.setXY(i, ringV3.length() < 84 ? 0 : 1, 1)
         }
         saturnRingsGeometry.uvsNeedUpdate = true;
-        saturnRings.rotateX(1.7);
-        saturnRings.rotateY(.18);
+        saturnRings.rotateX(-26.73 * 180/Math.PI);
 
         Saturn.groupTargets.push(saturnRings);
 
@@ -390,7 +465,11 @@
             radius: 40,
             distanceToSun: Saturn.radius + Saturn.distanceToSun + 140,
             orbiting: true,
-            velocity: 40
+            velocity: 6.8 * velocityFactor,
+            tilt: new THREE.Vector3(0, 97.92, 0),
+            passiveRotate: true,
+            rotation: new THREE.Vector3(0, 0.00071833, 0),
+            informationPanel: panel
         })
 
         var Neptune = new Planet({
@@ -399,7 +478,11 @@
             radius: 40,
             distanceToSun: Uranus.radius + Uranus.distanceToSun + 90,
             orbiting: true,
-            velocity: 65
+            velocity: 5.4 * velocityFactor,
+            tilt: new THREE.Vector3(0, 29.6, 0),
+            passiveRotate: true,
+            rotation: new THREE.Vector3(0, 0.00067125, 0),
+            informationPanel: panel
         })
 
         var Pluto = new Planet({
@@ -410,7 +493,11 @@
             radius: 3.2,
             distanceToSun: Neptune.radius + Neptune.distanceToSun + 55,
             orbiting: true,
-            velocity: 40
+            velocity: 4.7 * velocityFactor,
+            tilt: new THREE.Vector3(0, 119.6, 0),
+            passiveRotate: true,
+            rotation: new THREE.Vector3(0, 0.00638718, 0),
+            informationPanel: panel
         })
 
         planets.forEach(planet => {
@@ -467,16 +554,16 @@
 
             saturnRings.rotation.z-=0.00025
 
-            if (forward) {
+            if (forward && moveable) {
                 camera.translateZ(-1);
             }
-            if (backward) {
+            if (backward && moveable) {
                 camera.translateZ(1);
             }
-            if (left) {
+            if (left && moveable) {
                 camera.translateX(-1);
             }
-            if (right) {
+            if (right && moveable) {
                 camera.translateX(1); 
             }
             FramesPerSecond(Date.now());
@@ -533,6 +620,19 @@
                 camera.updateProjectionMatrix();
                 renderer.setSize(window.innerWidth, window.innerHeight);
         };
+
+        document.getElementById("menuButton").addEventListener('click', () => {
+            document.getElementById("menuButton").classList.toggle("active");
+            document.getElementById("PlanetMenu").classList.toggle("active");
+        })
+
+        var planetMenus = document.querySelectorAll(".planetContainer");
+
+        planetMenus.forEach(e => e.addEventListener('click', () => {
+            e.classList.toggle("active");
+        }))
+
+        
 
     </script>
 </body>
