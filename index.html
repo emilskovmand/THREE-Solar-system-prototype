@@ -108,6 +108,8 @@
         class Planet {
 
             constructor( parameters ) {
+                this.icon = (parameters.icon) ? parameters.icon : null;
+                this.color = (parameters.color) ? parameters.color : null; 
                 this.object = null;
                 this.deployed = false;
                 this.name = (parameters.name) ? parameters.name : "Not named";
@@ -150,6 +152,8 @@
                 this.x = this.group.position.x;
                 this.y = this.group.position.y;
                 this.z = this.group.position.z;
+
+                this.focused = false;
 
                 this.geometry = () => {
                     const
@@ -213,6 +217,10 @@
                 planets.push(this);
             }
 
+            focus() {
+                console.log(this.name)
+            }
+
             orbit() {
                 if (this.orbitCoordinates) {
                     const distance = (p1, p2) => {
@@ -241,10 +249,14 @@
                         this.informationPanel.insertAdjacentHTML('beforeend',
                             `
                             <div id="${this.name}" class="planetContainer">
-                                <span class="planetName">${this.name}</span>
+                                <span class="planetName" style="color:${this.color}">${this.name}</span>
                                     <div class="information">
                                         <div class="X coordinate"></div>
                                         <div class="Z coordinate"></div>
+
+                                        <div class="focusContainer">
+                                            <div class="focusButton" onclick="(${this.name}.focused = true)" style="color:${this.color}" ><span>Focus</span></div>
+                                        </div>
                                 </div>
                             </div>
                             `
@@ -252,11 +264,10 @@
                     }
 
                                         
-                    const infoSubjects = [{ str:"X", in: this.x}, { str:"Z", in: this.z}];
+                    const infoSubjects = [{ str:"X", in: this.x.toFixed(2)}, { str:"Z", in: this.z.toFixed(2)}];
 
                     infoSubjects.forEach(_ => {
-                        this.informationPanel.querySelector(`#${this.name} .${_.str}`).innerText = `${_.str}: ${_.in.toFixed(2)}`;
-
+                        this.informationPanel.querySelector(`#${this.name} .${_.str}`).innerText = `${_.str}: ${_.in}`;
                     })
 
                 }
@@ -272,9 +283,9 @@
                     this.z = this.group.position.z
 
                     if (this.passiveRotate) {
-                        this.object.rotation.y = this.rotation.y;
-                        this.object.rotation.x = this.rotation.x;
-                        this.object.rotation.z = this.rotation.z;
+                        this.object.rotation.y += this.rotation.y;
+                        this.object.rotation.x += this.rotation.x;
+                        this.object.rotation.z += this.rotation.z;
                     }
 
                     if (this.orbiting) {
@@ -287,6 +298,10 @@
 
                         this.group.translateX(velocityX);
                         this.group.translateZ(velocityY);
+                    }
+
+                    if (this.focused) {
+                        this.focus();
                     }
                 }
             }
@@ -631,6 +646,8 @@
         planetMenus.forEach(e => e.addEventListener('click', () => {
             e.classList.toggle("active");
         }))
+
+
 
         
 

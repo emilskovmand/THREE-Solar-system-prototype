@@ -113,6 +113,7 @@ overlay > #PlanetMenu > .container > .planetContainer.active {
 overlay > #PlanetMenu > .container > .planetContainer.active > .information {
   height: auto;
   width: 100%;
+  border-bottom: .5px solid #f5f5f5b5;
   display: block;
   -webkit-animation: rotateDropdown 520ms ease-in-out forwards;
           animation: rotateDropdown 520ms ease-in-out forwards;
@@ -178,6 +179,69 @@ overlay > #PlanetMenu > .container > .planetContainer.active > .information {
     -webkit-transform: scaleY(1);
             transform: scaleY(1);
   }
+}
+
+overlay > #PlanetMenu > .container > .planetContainer.active > .information > .focusContainer {
+  height: 3rem;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+overlay > #PlanetMenu > .container > .planetContainer.active > .information > .focusContainer > .focusButton {
+  -webkit-box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.5), inset 8px 8px 16px rgba(0, 0, 0, 0.1);
+          box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.5), inset 8px 8px 16px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  width: 50%;
+  height: 60%;
+  border-radius: 32px;
+  background: #f3f0f1;
+  position: relative;
+}
+
+overlay > #PlanetMenu > .container > .planetContainer.active > .information > .focusContainer > .focusButton::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transition: width .35s ease, border-radius .25s ease-out;
+  transition: width .35s ease, border-radius .25s ease-out;
+  width: 0%;
+  height: 100%;
+  border-radius: 0px;
+  background-color: rgba(255, 0, 0, 0.714);
+}
+
+overlay > #PlanetMenu > .container > .planetContainer.active > .information > .focusContainer > .focusButton > span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 16px;
+  text-align: center;
+  z-index: 2;
+  color: #111111;
+}
+
+overlay > #PlanetMenu > .container > .planetContainer.active > .information > .focusContainer > .focusButton:hover {
+  opacity: 1;
+}
+
+overlay > #PlanetMenu > .container > .planetContainer.active > .information > .focusContainer > .focusButton:hover::after {
+  width: 101%;
+  border-radius: 32px;
 }
 
 overlay > #PlanetMenu > .container > .planetContainer > .information {
